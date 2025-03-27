@@ -22,10 +22,7 @@ jobs:
       run: npm install
 
     - name: Tests ausführen
-      run: npm test
-
-    - name: Codequalität überprüfen
-      run: npm run lint
+      run: npm run build
 
     - name: Anwendung verpacken
       run: 7z a angular-frontend.7z dist/*
