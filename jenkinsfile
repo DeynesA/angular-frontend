@@ -1,0 +1,42 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    - name: JDK einrichten
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+
+    - name: Mit Maven bauen
+      run: mvn clean package
+
+    - name: Tests ausführen
+      run: mvn test
+
+    - name: Codequalität überprüfen
+      run: mvn verify
+
+    - name: Anwendung verpacken
+      run: 7z a springboot-backend.7z target/*.jar
+
+  post:
+    always:
+      - name: Build-Ergebnis anzeigen
+        run: echo 'Build abgeschlossen'
+
+    success:
+      - name: Erfolgreicher Build
+        run: echo 'Build war erfolgreich!'
+
+    failure:
+      - name: Fehlgeschlagener Build
+        run: echo 'Build ist fehlgeschlagen. Bitte überprüfen Sie die Logs.'
