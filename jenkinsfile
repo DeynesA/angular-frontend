@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - main
 
 jobs:
   build:
@@ -11,22 +9,19 @@ jobs:
     - name: Code auschecken
       uses: actions/checkout@v4
 
-    - name: JDK einrichten
-      uses: actions/setup-java@v4
+    - name: Node.js einrichten
+      uses: actions/setup-node@v4
       with:
-        java-version: '21'
+        node-version: '14'
 
-    - name: Mit Maven bauen
-      run: mvn clean package
+    - name: Abhängigkeiten installieren
+      run: npm install
 
     - name: Tests ausführen
-      run: mvn test
-
-    - name: Codequalität überprüfen
-      run: mvn verify
+      run: npm test
 
     - name: Anwendung verpacken
-      run: 7z a springboot-backend.7z target/*.jar
+      run: 7z a angular-frontend.7z dist/*
 
   post:
     always:
