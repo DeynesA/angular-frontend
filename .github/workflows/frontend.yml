@@ -19,6 +19,12 @@ jobs:
     - name: Abhängigkeiten installieren
       run: npm install
 
+    - name: Codequalität überprüfen
+      run: npm run lint
+
+    - name: Build
+      run: npm run build
+
     - name: Anwendung verpacken
       run: 7z a angular-frontend.7z dist/*
 
